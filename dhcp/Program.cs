@@ -48,8 +48,7 @@ namespace dhcp
                 de++;
             }
             string das = asd[0]+"." + asd[1] + "." + asd[2] + "." + Convert.ToString(de);
-           /* Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(das);*/
+           
             return das;
         }
         static void oldic(Dictionary<string,string>s,string falnem)
@@ -86,7 +85,7 @@ namespace dhcp
                 string b = asd[1];
                 if (dhcp.ContainsKey(b))
                 {
-                    Console.WriteLine(dhcp[b]);
+                   // Console.WriteLine(dhcp[b]);
                 }
                 else
                 {
@@ -99,7 +98,7 @@ namespace dhcp
                     {
                         string indulo = "192.168.10.100";
                         int okt4 = 100;
-                        while (okt4<200 || dhcp.ContainsValue(indulo) || res.ContainsValue(indulo) || exc.Contains(indulo) )
+                        while ( dhcp.ContainsValue(indulo) || res.ContainsValue(indulo) || exc.Contains(indulo) )
                         {
                             okt4++;
                             indulo = cimegyenlő(indulo);
@@ -116,11 +115,36 @@ namespace dhcp
                     }
                 }
             }
-            else
+            else 
             {
+                
+                string[] asd = a.Split(';');
+                string b = asd[1];
                
+                    foreach (var item in dhcp)
+                    {
+                        if (item.Value == b)
+                        {
+                            dhcp.Remove(item.Key);
+                            break;
+
+                        }
+                    }
+                    foreach (var item in res)
+                    {
+                        if (item.Value == b)
+                        {
+                            res.Remove(item.Key);
+                            break;
+
+                        }
+                    }
+              
+                exc.Remove(b);
+                Console.WriteLine("\bTÖRÖLVE: {0}",b);
             }
         }
+        
         static void Main(string[] args)
         {
             ol(exc,"excluded.csv");
@@ -131,6 +155,7 @@ namespace dhcp
             {
                 feladat(item);
             }
+           
             Console.ReadKey();
         }
     }

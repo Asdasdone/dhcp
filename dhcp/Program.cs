@@ -76,12 +76,27 @@ namespace dhcp
                 throw;
             }
         }
+        static void feladat(string a)
+        {
+            if (a.Contains("request"))
+            {
+               
+            }
+            else
+            {
+               
+            }
+        }
         static void Main(string[] args)
         {
             ol(exc,"excluded.csv");
             ol(com,"test.csv");
             oldic(dhcp,"dhcp.csv");
             oldic(res, "reserved.csv");
+            foreach (var item in com)
+            {
+                feladat(item);
+            }
             Console.ReadKey();
         }
     }

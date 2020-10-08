@@ -43,11 +43,13 @@ namespace dhcp
         {
             string[] asd = cim.Split('.');
             int de = int.Parse(asd[3]);
-            if (de<255)
+            if (de<200)
             {
                 de++;
             }
             string das = asd[0]+"." + asd[1] + "." + asd[2] + "." + Convert.ToString(de);
+           /* Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(das);*/
             return das;
         }
         static void oldic(Dictionary<string,string>s,string falnem)
@@ -80,7 +82,39 @@ namespace dhcp
         {
             if (a.Contains("request"))
             {
-               
+                string[] asd = a.Split(';');
+                string b = asd[1];
+                if (dhcp.ContainsKey(b))
+                {
+                    Console.WriteLine(dhcp[b]);
+                }
+                else
+                {
+                    if (res.ContainsKey(b))
+                    {
+                        Console.WriteLine($"{b} --->{res[b]}");
+                        dhcp.Add(b, res[b]);
+                    }
+                    else
+                    {
+                        string indulo = "192.168.10.100";
+                        int okt4 = 100;
+                        while (okt4<200 || dhcp.ContainsValue(indulo) || res.ContainsValue(indulo) || exc.Contains(indulo) )
+                        {
+                            okt4++;
+                            indulo = cimegyenlő(indulo);
+                        }
+                        if (okt4<200)
+                        {
+                            Console.WriteLine($"Kiosztott {b} ip:{indulo}");
+                            dhcp.Add(b, indulo);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Nincs kiosztható cím erre: {b}");
+                        }
+                    }
+                }
             }
             else
             {

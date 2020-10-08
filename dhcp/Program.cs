@@ -10,16 +10,19 @@ namespace dhcp
     class Program
     {
         static List<string> exc = new List<string>();
-        static void exol()
+        static Dictionary<string, string> dhcp = new Dictionary<string, string>();
+        static Dictionary<string, string> res = new Dictionary<string, string>();
+        static List<string> com = new List<string>();
+        static void ol(List<string>a,string cim)
         {
             try
             {
-                StreamReader ol = new StreamReader("excluded.csv");
+                StreamReader ol = new StreamReader(cim);
                 try
                 {
                     while (!ol.EndOfStream)
                     {
-                        exc.Add(ol.ReadLine());
+                        a.Add(ol.ReadLine());
                     }
                 }
                 catch (Exception)
@@ -47,10 +50,38 @@ namespace dhcp
             string das = asd[0]+"." + asd[1] + "." + asd[2] + "." + Convert.ToString(de);
             return das;
         }
+        static void oldic(Dictionary<string,string>s,string falnem)
+        {
+            try
+            {
+                StreamReader ol = new StreamReader(falnem);
+                try
+                {
+                    while (!ol.EndOfStream)
+                    {
+                        string[] f = ol.ReadLine().Split(';');
+                        s.Add(f[0], f[1]);
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         static void Main(string[] args)
         {
-            exol();
-            
+            ol(exc,"excluded.csv");
+            ol(com,"test.csv");
+            oldic(dhcp,"dhcp.csv");
+            oldic(res, "reserved.csv");
             Console.ReadKey();
         }
     }
